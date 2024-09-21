@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
+import 'package:groceryshop/Screens/AuthScreens/VerifyEmailScreen.dart';
 import '../../Repo/ColorRepo.dart';
 import '../../Repo/RadiiRepo.dart';
 import 'AccountVerificationScreen.dart';
@@ -15,7 +16,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
   void _resetPassword() {
     Navigator.of(context).push(
-      MaterialPageRoute(builder: (context) => const AccountVerificationScreen(phoneNumber: '08103139891', isPasswordVerification: true)),
+      MaterialPageRoute(builder: (context) => const VerifyEmailScreen()),
     );
   }
 

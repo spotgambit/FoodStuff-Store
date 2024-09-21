@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'Screens/AuthScreens/SplashScreen.dart';
+import 'Screens/SettingsScreens/SettingsScreen.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,6 +16,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: const SplashScreen(),
+      routes: {
+        '/settings': (context) => const SettingsScreen(),
+      },
     );
   }
 }

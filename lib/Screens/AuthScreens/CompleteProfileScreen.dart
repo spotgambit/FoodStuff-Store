@@ -37,6 +37,15 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
     _addressController.addListener(_enableContinueButton);
   }
 
+  @override
+  void dispose() {
+    _firstNameController.dispose();
+    _lastNameController.dispose();
+    _emailController.dispose();
+    _addressController.dispose();
+    super.dispose();
+  }
+
   bool _validateFirstName(String name) {
     return name.isNotEmpty && !name.contains(' ') && name.length > 1;
   }
@@ -71,15 +80,6 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
     Navigator.of(context).push(
       MaterialPageRoute(builder: (context) => const SignInScreen()),
     );
-  }
-
-  @override
-  void dispose() {
-    _firstNameController.dispose();
-    _lastNameController.dispose();
-    _emailController.dispose();
-    _addressController.dispose();
-    super.dispose();
   }
 
   void _openTermsOfService() {
@@ -189,7 +189,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                   ),
                 ],
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 20),
               Text(
                 ScreenContext.inputLabels[2],
                 style: const TextStyle(
@@ -206,7 +206,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                 controller: _emailController,
                 isValid: _isEmailAddressValid,
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 20),
               Text(
                 ScreenContext.inputLabels[3],
                 style: const TextStyle(

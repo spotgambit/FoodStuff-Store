@@ -1,0 +1,4 @@
+enum Shapes {
+  circle,
+  square,
+}

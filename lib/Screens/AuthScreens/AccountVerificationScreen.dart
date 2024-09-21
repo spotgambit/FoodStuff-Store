@@ -1,15 +1,18 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:groceryshop/Screens/SettingsScreens/SettingsScreen.dart';
+import 'package:groceryshop/Utils/StringFormatterHelper.dart';
 import '../../Repo/ColorRepo.dart';
 import '../../Repo/RadiiRepo.dart';
 import 'CompleteProfileScreen.dart';
 import 'CreateNewPasswordScreen.dart';
 
 class AccountVerificationScreen extends StatefulWidget {
-  final String phoneNumber;
-  final bool isPasswordVerification;
+  //Value is the phone number or email that needs to be verified
+  final String value;
+  final String verificationType;
 
-  const AccountVerificationScreen({super.key, required this.phoneNumber, required this.isPasswordVerification});
+  const AccountVerificationScreen({super.key, required this.value, required this.verificationType});
 
   @override
   State<AccountVerificationScreen> createState() => _AccountVerificationScreenState();
@@ -46,14 +49,26 @@ class _AccountVerificationScreenState extends State<AccountVerificationScreen> {
   }
 
   void _verifyAccount() {
-    if(widget.isPasswordVerification){
-      Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => const CreateNewPasswordScreen()),
-      );
-    }else{
-      Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => const CompleteProfileScreen()),
-      );
+    switch(widget.verificationType){
+      case 'password':
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => const CreateNewPasswordScreen()),
+        );
+        break;
+
+      case 'account':
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => const CompleteProfileScreen()),
+        );
+        break;
+
+        case 'phone':
+          Navigator.of(context).popUntil(ModalRoute.withName('/settings'));
+        break;
+
+      case 'email':
+        Navigator.of(context).popUntil(ModalRoute.withName('/settings'));
+        break;
     }
   }
 
@@ -116,7 +131,7 @@ class _AccountVerificationScreenState extends State<AccountVerificationScreen> {
               ),
               const SizedBox(height: 10),
               Text(
-                '${ScreenContext.subHeaders[0]} ${widget.phoneNumber}',
+                '${ScreenContext.subHeaders[0]} ${StringFormatHelper.formatObscureContactInfo(widget.value)}',
                 style: TextStyle(
                   fontFamily: 'Urbanist',
                   fontSize: screenWidth * 0.045,
@@ -227,7 +242,7 @@ class ScreenContext {
   ];
 
   static const List<String> subHeaders = [
-    'Enter the 6-digit verification code sent to you at ',
+    'Enter the 6-digit verification code sent to you at',
   ];
 
   static const List<String> linkText = [

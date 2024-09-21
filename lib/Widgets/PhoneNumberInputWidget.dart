@@ -5,12 +5,14 @@ class PhoneNumberInputWidget extends StatelessWidget {
   final double screenWidth;
   final String hintText;
   final TextEditingController controller;
+  final bool isValid;
 
   const PhoneNumberInputWidget({
     super.key,
     required this.screenWidth,
     required this.hintText,
     required this.controller,
+    required this.isValid,
   });
 
   @override
@@ -21,7 +23,7 @@ class PhoneNumberInputWidget extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: ShapeDecoration(
         shape: RoundedRectangleBorder(
-          side: const BorderSide(width: 0.80, color: Color(0xFF919191)),
+          side: BorderSide(width: 0.80, color: isValid ? ColorRepo.muted : ColorRepo.secondary),
           borderRadius: BorderRadius.circular(8),
         ),
       ),

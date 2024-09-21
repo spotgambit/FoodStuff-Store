@@ -17,11 +17,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController _pageController = PageController();
 
   void _skipOnboarding() {
-    if(_currentSlide == ScreenContext.headers.length - 1){
+    if (_currentSlide == ScreenContext.headers.length - 1) {
       Navigator.of(context).push(
         MaterialPageRoute(builder: (context) => const SignInScreen()),
       );
-    }else{
+    } else {
       _pageController.animateToPage(
         ScreenContext.headers.length - 1,
         duration: const Duration(milliseconds: 300),
@@ -54,119 +54,119 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: ColorRepo.background,
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.only(top: screenHeight * 0.2, left: RadiiRepo.screenPadding, right: RadiiRepo.screenPadding),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+      body: Stack(
+        children: <Widget>[
+          AnimatedContainer(
+            duration: const Duration(milliseconds: 500),
+            color: ColorRepo.onboardingScreenBgColors[_currentSlide],
+            height: screenHeight,
+            width: screenWidth,
+            child: Padding(
+              padding: EdgeInsets.only(bottom: screenHeight * 0.2),
+              child: PageView(
+                controller: _pageController,
+                onPageChanged: (index) {
+                  setState(() {
+                    _currentSlide = index;
+                  });
+                },
                 children: [
-                  Text(
+                  Image.asset(ImageRepo.onboardingScreenImages[0]),
+                  Image.asset(ImageRepo.onboardingScreenImages[1]),
+                  Image.asset(ImageRepo.onboardingScreenImages[2]),
+                ],
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Image.asset(ImageRepo.ellipseSquare, width: screenWidth),
+          ),
+          Positioned(
+            bottom: 140,
+            left: 0,
+            right: 0,
+            child: Padding(
+            padding: EdgeInsets.only(top: screenHeight * 0.2, left: RadiiRepo.screenPadding, right: RadiiRepo.screenPadding),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: screenWidth,
+                  child: Text(
                     ScreenContext.headers[_currentSlide],
                     style: TextStyle(
                       fontFamily: 'MadeGentle',
                       fontSize: screenWidth * 0.060,
                       fontWeight: FontWeight.bold,
                     ),
-                    textAlign: TextAlign.left,
+                    textAlign: TextAlign.center,
                   ),
-                  const SizedBox(height: 10),
-                  Text(
-                    ScreenContext.descriptions[_currentSlide],
-                    style: TextStyle(
-                      fontFamily: 'Urbanist',
-                      fontSize: screenWidth * 0.045,
-                      color: Colors.grey[600],
-                    ),
-                    textAlign: TextAlign.left,
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  ScreenContext.descriptions[_currentSlide],
+                  style: TextStyle(
+                    fontFamily: 'Urbanist',
+                    fontSize: screenWidth * 0.045,
+                    color: Colors.grey[600],
                   ),
-                ],
-              ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
             ),
-            SizedBox(
-              height: 500,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Stack(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 38.0),
-                          child: Center(
-                            child: Image.asset(ImageRepo.onboardingBg), // Make sure to add your image to the assets folder and update pubspec.yaml
-                          ),
+          ),),
+          Positioned(
+            bottom: 40,
+            left: 0,
+            right: 0,
+            child: Padding(
+              padding: const EdgeInsets.all(RadiiRepo.screenPadding),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  SizedBox(
+                    width: screenWidth * 0.44,
+                    child: OutlinedButton(
+                      onPressed: _skipOnboarding,
+                      style: OutlinedButton.styleFrom(
+                        side: BorderSide(color: _currentSlide == ScreenContext.headers.length - 1 ? ColorRepo.primary2 : ColorRepo.transparent),
+                        padding: const EdgeInsets.all(RadiiRepo.buttonPadding),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(RadiiRepo.borderRadius),
                         ),
-                        Padding(
-                          padding: EdgeInsets.only(bottom: screenHeight * 0.2),
-                          child: PageView(
-                            controller: _pageController,
-                            onPageChanged: (index) {
-                              setState(() {
-                                _currentSlide = index;
-                              });
-                            },
-                            children: [
-                              Image.asset(ImageRepo.onboardingSlide1),
-                              Image.asset(ImageRepo.onboardingSlide2),
-                              Image.asset(ImageRepo.onboardingSlide3),
-                            ],
-                          ),
-                        ),
-                      ],
+                      ),
+                      child: Text(
+                        _currentSlide == ScreenContext.headers.length - 1 ? ScreenContext.login : ScreenContext.skip,
+                        style: const TextStyle(color: ColorRepo.dark, fontFamily: 'Urbanist', fontWeight: FontWeight.w700),
+                      ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(RadiiRepo.screenPadding),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        SizedBox(
-                          width: screenWidth * 0.44,
-                          child: OutlinedButton(
-                            onPressed: _skipOnboarding,
-                            style: OutlinedButton.styleFrom(
-                              side: BorderSide(color: _currentSlide == ScreenContext.headers.length - 1 ? ColorRepo.primary : ColorRepo.transparent),
-                              padding: const EdgeInsets.all(RadiiRepo.buttonPadding),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(RadiiRepo.borderRadius),
-                              ),
-                            ),
-                            child: Text(
-                              _currentSlide == ScreenContext.headers.length - 1 ? ScreenContext.login : ScreenContext.skip,
-                              style: const TextStyle(color: ColorRepo.dark, fontFamily: 'Urbanist', fontWeight: FontWeight.w700),
-                            ),
-                          ),
+                  SizedBox(
+                    width: screenWidth * 0.44,
+                    child: ElevatedButton(
+                      onPressed: _nextSlide,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: ColorRepo.primary2,
+                        padding: const EdgeInsets.all(RadiiRepo.buttonPadding),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(RadiiRepo.borderRadius),
                         ),
-                        SizedBox(
-                          width: screenWidth * 0.44,
-                          child: ElevatedButton(
-                            onPressed: _nextSlide,
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: ColorRepo.primary,
-                              padding: const EdgeInsets.all(RadiiRepo.buttonPadding),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(RadiiRepo.borderRadius),
-                              ),
-                            ),
-                            child: Text(
-                              ScreenContext.buttons[_currentSlide],
-                              style: const TextStyle(color: Colors.white, fontFamily: 'Urbanist', fontWeight: FontWeight.w700),
-                            ),
-                          ),
-                        ),
-                      ],
+                      ),
+                      child: Text(
+                        ScreenContext.buttons[_currentSlide],
+                        style: const TextStyle(color: Colors.white, fontFamily: 'Urbanist', fontWeight: FontWeight.w700),
+                      ),
                     ),
                   ),
                 ],
               ),
             ),
-          ],
-        ),
+          ),
+
+        ],
       ),
     );
   }

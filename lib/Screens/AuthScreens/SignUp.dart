@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:groceryshop/Screens/AuthScreens/AccountVerificationScreen.dart';
 import 'package:groceryshop/Screens/AuthScreens/SignIn.dart';
 import 'package:groceryshop/Utils/StringFormatterHelper.dart';
@@ -64,7 +63,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   void _signUp() {
     Navigator.of(context).push(
-      MaterialPageRoute(builder: (context) => AccountVerificationScreen(phoneNumber: _phoneController.text.trim(), isPasswordVerification: false)),
+      MaterialPageRoute(builder: (context) => AccountVerificationScreen(value: _phoneController.text.trim(), verificationType: 'phone')),
     );
   }
 
@@ -126,6 +125,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 screenWidth: screenWidth,
                 hintText: ScreenContext.inputPlaceholders[0],
                 controller: _phoneController,
+                isValid: _isValidPhoneNumber,
               ),
               const SizedBox(height: 40),
               Text(

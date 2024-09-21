@@ -74,7 +74,7 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
 
   void _createPassword() {
     Navigator.of(context).push(
-      MaterialPageRoute(builder: (context) => const SignInScreen(showSuccessBottomSheet: true)),
+      MaterialPageRoute(builder: (context) => const SignInScreen(showPasswordSuccessBottomSheet: true)),
     );
   }
 
